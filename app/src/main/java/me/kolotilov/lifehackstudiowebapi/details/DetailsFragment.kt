@@ -27,9 +27,8 @@ class DetailsFragment : FragmentWithViewModel<DetailsViewModel, DetailsViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args = arguments ?: throw IllegalArgumentException("Use newInstance() instead!")
 
-        viewModel.getDetails(args.getLong(ID_KEY))
+        viewModel.getDetails(DetailsFragmentArgs.fromBundle(arguments!!).id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
                 item_name.text = data.name
