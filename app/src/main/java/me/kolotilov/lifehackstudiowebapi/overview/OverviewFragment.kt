@@ -21,7 +21,7 @@ class OverviewFragment : FragmentWithViewModel<OverviewViewModel, OverviewViewMo
         viewModel.overviewData
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
-                overview_recycler.adapter = OverviewAdapter(data)
+                overview_recycler.adapter = OverviewAdapter(data, this)
             }
             .autoDispose()
     }
