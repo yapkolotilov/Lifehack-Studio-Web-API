@@ -2,7 +2,6 @@ package me.kolotilov.lifehackstudiowebapi.utils
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
@@ -13,7 +12,7 @@ fun Disposable.autoDispose() {
     compositeDisposable.add(this)
 }
 
-fun Drawable?.notNull(): Drawable = requireNotNull(this)
+fun <T : Any> T?.notNull(): T = requireNotNull(this)
 
 fun safeStartActivity(context: Context, intent: Intent) {
     if (intent.resolveActivity(context.packageManager) != null)

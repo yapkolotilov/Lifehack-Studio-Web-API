@@ -8,7 +8,7 @@ import me.kolotilov.lifehackstudiowebapi.overview.toOverviewData
 import javax.inject.Inject
 
 class WebServiceImpl @Inject constructor(
-    @Inject val api: LifehackApi
+    val api: LifehackApi
 ) : WebService {
     override fun getOverviewData(): Single<List<OverviewData>> {
         return api.getOverviewData()

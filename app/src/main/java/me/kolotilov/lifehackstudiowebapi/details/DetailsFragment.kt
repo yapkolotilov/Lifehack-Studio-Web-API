@@ -3,6 +3,7 @@ package me.kolotilov.lifehackstudiowebapi.details
 import android.net.Uri.parse
 import android.os.Bundle
 import android.text.Html
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,19 +12,21 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_details.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import me.kolotilov.lifehackstudiowebapi.R
 import me.kolotilov.lifehackstudiowebapi.common.FragmentWithViewModel
 import me.kolotilov.lifehackstudiowebapi.details.DetailsFragmentDirections.Companion.actionDetailsFragmentToOverviewFragment
 import me.kolotilov.lifehackstudiowebapi.uri.UriView
 import me.kolotilov.lifehackstudiowebapi.utils.BASE_URL
 import me.kolotilov.lifehackstudiowebapi.utils.autoDispose
+import timber.log.Timber
 
 private const val ID_KEY = "ID"
 
 class DetailsFragment : FragmentWithViewModel<DetailsViewModel, DetailsViewModel.Factory>() {
+
+    private var job = Job()
+    private val scope = CoroutineScope(Dispatchers.IO + job)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +37,15 @@ class DetailsFragment : FragmentWithViewModel<DetailsViewModel, DetailsViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        view.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                scope.cancel()
+                Timber.d("BRUH")
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
+        }
 
         viewModel.getDetails(DetailsFragmentArgs.fromBundle(arguments!!).id)
             .observeOn(AndroidSchedulers.mainThread())
@@ -63,14 +75,16 @@ class DetailsFragment : FragmentWithViewModel<DetailsViewModel, DetailsViewModel
             }, {
                 val errorText = Html.fromHtml("<font color=\"#ffffff\">Invalid web data</font>")
                 Snackbar.make(view, errorText, Snackbar.LENGTH_SHORT).show()
-                GlobalScope.launch { redirectBackIn(1000) }
+                scope.launch { redirectBackIn(1000) }
             })
             .autoDispose()
     }
 
     private suspend fun redirectBackIn(delayTime: Long) {
         delay(delayTime)
-        findNavController().navigate(actionDetailsFragmentToOverviewFragment())
+        runCatching {
+            findNavController().navigate(actionDetailsFragmentToOverviewFragment())
+        }
     }
 
     companion object {
