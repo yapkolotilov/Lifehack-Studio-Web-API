@@ -4,27 +4,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import me.kolotilov.lifehackstudiowebapi.web.LifehackApi
+import me.kolotilov.lifehackstudiowebapi.web.WebService
 import javax.inject.Inject
 
 class DetailsViewModel(
-    private val api: LifehackApi
+    private val web: WebService
 ) : ViewModel() {
 
     fun getDetails(id: Long): Single<DetailsData> {
-        return api.getDetailsData(id)
-            .map { it[0] }
-            .map { it.toDetailsData() }
+        return web.getDetailsData(id)
             .subscribeOn(Schedulers.io())
     }
 
     class Factory @Inject constructor(
-        private val api: LifehackApi
+        private val web: WebService
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return DetailsViewModel(api) as T
+            return DetailsViewModel(web) as T
         }
     }
 }
