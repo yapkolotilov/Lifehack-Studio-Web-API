@@ -1,4 +1,4 @@
-package me.kolotilov.lifehackstudiowebapi.overview
+package me.kolotilov.lifehackstudiowebapi.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,10 +7,12 @@ import io.reactivex.schedulers.Schedulers
 import me.kolotilov.lifehackstudiowebapi.web.WebService
 import javax.inject.Inject
 
-class OverviewViewModel(private val web: WebService) : ViewModel() {
+class DetailsViewModel(
+    private val web: WebService
+) : ViewModel() {
 
-    val overviewData: Single<List<OverviewData>> get() {
-        return web.getOverviewData()
+    fun getDetails(id: Long): Single<DetailsData> {
+        return web.getDetailsData(id)
             .subscribeOn(Schedulers.io())
     }
 
@@ -18,9 +20,9 @@ class OverviewViewModel(private val web: WebService) : ViewModel() {
         private val web: WebService
     ) : ViewModelProvider.Factory {
 
+        @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return OverviewViewModel(web) as T
+            return DetailsViewModel(web) as T
         }
     }
 }

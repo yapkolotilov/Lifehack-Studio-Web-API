@@ -5,10 +5,12 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     app:cardCornerRadius="4dp"
-    android:layout_marginVertical="2dp"
-    android:layout_marginHorizontal="4dp">
+    app:cardElevation="4dp"
+    android:layout_marginVertical="4dp"
+    android:layout_marginHorizontal="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp">
@@ -27,10 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            tools:text="Card text"
-            android:textStyle="bold"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/overview_item_image"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Card text" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

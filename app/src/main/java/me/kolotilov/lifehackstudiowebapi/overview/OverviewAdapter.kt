@@ -1,24 +1,28 @@
 package me.kolotilov.lifehackstudiowebapi.overview
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import me.kolotilov.lifehackstudiowebapi.R
+import me.kolotilov.lifehackstudiowebapi.overview.OverviewFragmentDirections.Companion.actionOverviewFragmentToDetailsFragment
 import me.kolotilov.lifehackstudiowebapi.utils.BASE_URL
 
 
-class OverviewAdapter(private val data: List<OverviewData>) : RecyclerView.Adapter<OverviewViewHolder>() {
+class OverviewAdapter(
+    private val data: List<OverviewData>,
+    private val fragment: Fragment
+) : RecyclerView.Adapter<OverviewViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OverviewViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.overview_item, parent, false)
-
         return OverviewViewHolder(view)
     }
 
@@ -27,7 +31,11 @@ class OverviewAdapter(private val data: List<OverviewData>) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: OverviewViewHolder, position: Int) {
-        holder.bind(data[position])
+        val item = data[position]
+        holder.bind(item)
+        holder.itemView.setOnClickListener {
+            fragment.findNavController().navigate(actionOverviewFragmentToDetailsFragment(item.id))
+        }
     }
 }
 
