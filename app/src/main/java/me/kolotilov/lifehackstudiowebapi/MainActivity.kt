@@ -1,10 +1,8 @@
 package me.kolotilov.lifehackstudiowebapi
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import me.kolotilov.lifehackstudiowebapi.overview.OverviewFragment
+import me.kolotilov.lifehackstudiowebapi.details.DetailsFragment
 
 class MainActivity : FragmentActivity() {
 
@@ -13,7 +11,7 @@ class MainActivity : FragmentActivity() {
         setContentView(R.layout.activity_main)
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, OverviewFragment.newInstance())
+            .add(R.id.fragment_container, DetailsFragment.newInstance(1))
             .commit()
     }
 }

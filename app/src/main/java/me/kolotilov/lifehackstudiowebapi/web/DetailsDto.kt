@@ -12,9 +12,9 @@ data class DetailsDto(
     @SerializedName("description")
     val description: String,
     @SerializedName("lat")
-    val latitude: String,
+    val latitude: Float,
     @SerializedName("lon")
-    val longitude: String,
+    val longitude: Float,
     @SerializedName("www")
     val url: String,
     @SerializedName("phone")
