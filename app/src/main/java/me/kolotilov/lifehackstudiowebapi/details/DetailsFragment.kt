@@ -18,7 +18,6 @@ import me.kolotilov.lifehackstudiowebapi.common.FragmentWithViewModel
 import me.kolotilov.lifehackstudiowebapi.details.DetailsFragmentDirections.Companion.actionDetailsFragmentToOverviewFragment
 import me.kolotilov.lifehackstudiowebapi.uri.UriView
 import me.kolotilov.lifehackstudiowebapi.utils.BASE_URL
-import me.kolotilov.lifehackstudiowebapi.utils.autoDispose
 import timber.log.Timber
 
 private const val ID_KEY = "ID"
@@ -41,7 +40,6 @@ class DetailsFragment : FragmentWithViewModel<DetailsViewModel, DetailsViewModel
         view.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 scope.cancel()
-                Timber.d("BRUH")
                 return@setOnKeyListener true
             }
             return@setOnKeyListener false

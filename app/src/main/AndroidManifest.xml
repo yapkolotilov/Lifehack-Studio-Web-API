@@ -15,6 +15,7 @@
         android:usesCleartextTraffic="true"
         android:name=".App">
         <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NooActionBar"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>

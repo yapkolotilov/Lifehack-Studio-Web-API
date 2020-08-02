@@ -6,12 +6,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
 
-private val compositeDisposable by lazy { CompositeDisposable() }
-
-fun Disposable.autoDispose() {
-    compositeDisposable.add(this)
-}
-
 fun <T : Any> T?.notNull(): T = requireNotNull(this)
 
 fun safeStartActivity(context: Context, intent: Intent) {
